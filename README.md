@@ -1,2 +1,22 @@
 # -SensorIoT-Experiences-
-To proceed, you'll need to set up your Raspberry Pi with the required libraries. You can use the Adafruit DHT library for the DHT22 sensor. Here's an example of C code that reads temperature data from a DHT22 sensor and prints it to the console:
+#include <wiringPi.h>
+#include <dht.h>
+#include <stdio.h>
+
+int main() {
+    if (wiringPiSetup() == -1)
+        return 1; // Error
+    
+    int pin = 2; // GPIO pin number (wiringPi pin numbering)
+
+    if (dhtRead(pin, DHT22) == -1)
+        return 1; // Error
+
+    float temperature = dhtData[DHT_TEMPERATURE];
+    float humidity = dhtData[DHT_HUMIDITY];
+
+    printf("Temperature: %.2f°C\n", temperature);
+    printf("Humidity: %.2f%%\n", humidity);
+
+    return 0;
+}
